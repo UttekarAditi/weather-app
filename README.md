@@ -19,7 +19,7 @@ npm install
 npm start
 
 # Live Demo
-(Paste your Vercel link here after deployment)
+(https://weather-app-steel-six-33.vercel.app/)
 
 # Screenshots
 (<img width="1825" height="806" alt="image" src="https://github.com/user-attachments/assets/4de1aed8-b05c-4fcb-9e4d-8280e29ac1bd" />,
