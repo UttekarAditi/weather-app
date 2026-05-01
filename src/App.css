@@ -1,38 +1,293 @@
-.App {
-  text-align: center;
+/* ===== RESET ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html, body, #root {
+  height: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* ===== BODY BACKGROUND ===== */
+body {
+  /* Default background, overridden dynamically via inline styles */
+  background: linear-gradient(135deg, #a5d2ff, #bbb7f2);
+  background-size: cover;
+  background-attachment: fixed;
 }
 
-.App-header {
-  background-color: #282c34;
+/* ===== MAIN CONTAINER ===== */
+.app-container {
   min-height: 100vh;
+  width: 100%;
+  padding: 40px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  transition: background 0.8s ease-in-out, color 0.3s ease;
+}
+
+/* Glassmorphism base class */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+  border-radius: 16px;
+}
+
+/* Dark mode glassmorphism override */
+.dark .glass-panel {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ===== TITLE ===== */
+.app-title {
+  font-size: 42px;
+  margin-bottom: 30px;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  animation: fadeInDown 0.8s ease;
+}
+
+/* ===== INPUT SECTION ===== */
+.search-box {
+  margin-bottom: 30px;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-wrap: wrap;
+  gap: 10px;
+  animation: fadeInUp 0.8s ease;
 }
 
-.App-link {
-  color: #61dafb;
+.city-input {
+  width: 300px;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+  border-radius: 30px;
+  color: inherit;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+  transition: 0.3s ease;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.dark .city-input {
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+}
+.dark .city-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.city-input:focus {
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 10px rgba(255,255,255,0.4);
+}
+.dark .city-input:focus {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* ===== BUTTONS ===== */
+button {
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(5px);
+  color: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.dark button {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+button:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.dark button:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.location-button {
+  background: rgba(255, 255, 255, 0.6);
+}
+.dark .location-button {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ===== WEATHER CARD ===== */
+.weather-card {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  padding: 30px;
+  width: 350px;
+  animation: zoomIn 0.6s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.weather-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.2);
+}
+
+.weather-card h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+.weather-card h3 {
+  font-size: 48px;
+  font-weight: 300;
+  margin: 15px 0;
+}
+.weather-card p {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.weather-card img {
+  width: 80px;
+  height: 80px;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+}
+
+/* ===== ERROR/LOADING ===== */
+.status-message {
+  font-size: 18px;
+  margin-top: 20px;
+  font-weight: 600;
+  animation: fadeIn 0.5s ease;
+}
+.error-message {
+  color: #ff4d4d;
+  background: rgba(255, 0, 0, 0.1);
+  padding: 10px 20px;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+}
+
+/* ===== FORECAST ===== */
+.forecast-container {
+  margin-top: 10px;
+  width: 100%;
+  max-width: 800px;
+  animation: fadeInUp 0.8s ease backwards;
+  animation-delay: 0.2s; /* sequential entrance */
+}
+
+.forecast-container h3 {
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+.forecast-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.forecast-card {
+  padding: 20px;
+  width: 140px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.forecast-card:hover {
+  transform: translateY(-5px) scale(1.05);
+}
+
+.forecast-card img {
+  width: 50px;
+  height: 50px;
+  margin: 10px 0;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+/* ===== THEME TEXT COLORS ===== */
+.light {
+  color: #1a1a1a;
+}
+.dark {
+  color: #f1f1f1;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .app-container {
+    padding: 20px 10px;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .app-title {
+    font-size: 32px;
+  }
+
+  .search-box {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .city-input {
+    width: 90%;
+    margin-right: 0;
+  }
+
+  button {
+    width: 90%;
+    margin-left: 0;
+  }
+
+  .weather-card {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .forecast-grid {
+    gap: 15px;
+  }
+
+  .forecast-card {
+    width: 45%; /* Two cards effectively per row on small screens */
+    min-width: 110px;
   }
 }
